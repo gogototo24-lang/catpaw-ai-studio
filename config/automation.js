@@ -1,5 +1,5 @@
 window.CATPAW_AUTOMATION={
-version:"1.9",
+version:"2.0",
 enabled:false,
 test_mode:true,
 provider:"n8n",
