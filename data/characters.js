@@ -1,5 +1,5 @@
 window.CATPAW_DB={
-version:"1.2",
+version:"1.3",
 source:"貓掌江湖中央角色資料庫同步層",
 characters:{
 "舞魅喵":{id:"MZ_DANCE",gender:"母喵",canon:"CANON_LOCKED",look:"白色母喵、青綠眼、黑色蕾絲羽飾華服、暗色／翠綠冠飾",weapon:"華麗深色長劍",element:"藍色雷電",move:"魅影雷舞",voice:"舞啊舞——舞魅來！"},
