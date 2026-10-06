@@ -1,0 +1,10 @@
+{
+  "name":"Catpaw AI Studio v1.8 Bridge Template",
+  "nodes":[
+    {"name":"Webhook","type":"n8n-nodes-base.webhook","parameters":{"httpMethod":"POST","path":"catpaw-production","responseMode":"onReceived"}},
+    {"name":"Validate Payload","type":"n8n-nodes-base.code","parameters":{"jsCode":"const x=$json; if(!x.job_id||!x.character||!x.production_pack) throw new Error('Invalid Catpaw payload'); return [{json:{...x,received_at:new Date().toISOString(),bridge_status:'received'}}];"}}
+  ],
+  "connections":{"Webhook":{"main":[[{"node":"Validate Payload","type":"main","index":0}]]}},
+  "active":false,
+  "settings":{}
+}
