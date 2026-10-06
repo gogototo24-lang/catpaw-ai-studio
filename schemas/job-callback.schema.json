@@ -1,0 +1,14 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "title":"Catpaw AI Studio Job Callback",
+ "type":"object",
+ "required":["job_id","status","updated_at"],
+ "properties":{
+  "job_id":{"type":"string"},
+  "status":{"enum":["received","generating","generated","editing","completed","failed"]},
+  "provider":{"type":"string"},
+  "asset_url":{"type":"string"},
+  "error":{"type":"string"},
+  "updated_at":{"type":"string"}
+ }
+}
