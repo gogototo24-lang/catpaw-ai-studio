@@ -1,16 +1,17 @@
-# 貓掌煉金術 AI Studio v2.0
+# 貓掌煉金術 AI Studio v2.1
 
 《貓掌江湖》CANON 鎖定 AI 短影音製片工作台。
 
-## v2.0 製片閉環骨架
-流程：AI Studio → 安全 n8n／後端 → 影片 Provider → callback → Google Sheet 影片紀錄。
+## v2.1 Mock 閉環
+新增可匯入 n8n 的 `n8n/catpaw-v2.1-mock-closed-loop.json`：
 
-- 新增 `config/providers.js`：PixVerse 為預設影片 Provider，採 n8n_proxy；Flow 保留 manual_handoff。
-- Provider 預設未啟用，公開前端不保存任何 API key。
-- 新增 `schemas/job-callback.schema.json`：received / generating / generated / editing / completed / failed。
-- 工作台可建立 Google Sheet「影片紀錄」回寫 payload 預覽。
-- callback 狀態可在本機保存，供後續任務看板顯示。
-- CANON / Master 驗證仍是生成前置條件。
+Webhook → Payload 驗證 → CANON / Master Gate → Provider Router → PixVerse MOCK → Callback + Google Sheet Row。
 
-## 下一步
-建立 n8n v2 workflow：Webhook → 驗證 → Provider Router → PixVerse → 狀態 callback → Google Sheet 影片紀錄。先使用測試憑證／測試 webhook 端到端驗證，再考慮正式啟用。
+### 安全測試原則
+- PixVerse 目前是 MOCK，不呼叫正式 API、不消耗影片點數。
+- workflow 預設 `active:false`。
+- 公開 GitHub 不保存 n8n webhook、PixVerse key、Google 憑證。
+- Master 未核准時只允許 mock 測試，不應進正式生成。
+
+## 下一步 v2.2
+在 n8n 實際匯入此 workflow 後，用一筆舞魅喵測試 payload 驗證完整資料流；確認成功後才加入 Google Sheets 真實 Append Row 與 PixVerse 正式 provider 節點。
