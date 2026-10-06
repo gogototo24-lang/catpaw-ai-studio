@@ -1,0 +1,9 @@
+window.CATPAW_DB={
+version:"1.2",
+source:"貓掌江湖中央角色資料庫同步層",
+characters:{
+"舞魅喵":{id:"MZ_DANCE",gender:"母喵",canon:"CANON_LOCKED",look:"白色母喵、青綠眼、黑色蕾絲羽飾華服、暗色／翠綠冠飾",weapon:"華麗深色長劍",element:"藍色雷電",move:"魅影雷舞",voice:"舞啊舞——舞魅來！"},
+"星織霜雨":{id:"MZ_STARFROST",gender:"母喵",canon:"CANON_LOCKED",look:"銀灰母喵、雪白頸胸、藍白金皇族華服、藍金珠寶冠",weapon:"星織霜羽長傘",element:"冰羽霜氣",move:"霜羽破千軍",voice:"一傘織霜雨，萬羽破千軍！"},
+"白帝喵尊":{id:"MZ_WHITE_EMPEROR",gender:"母喵",canon:"CANON_LOCKED",look:"雪白長毛、湛藍雙眼、白銀雲紋長袍、淡金肩飾",weapon:"無實體武器；空手掌印／指訣",element:"白金雲氣",move:"天外一念・萬象歸寂",voice:"天外一念——萬象歸寂。"},
+"月扇影喵":{id:"MZ_MOONFAN",gender:"母喵",canon:"CANON_LOCKED",look:"黑色母喵、紫色雙眼、暗紫黑銀皇族華服",weapon:"黑色折扇",element:"紫黑月影",move:"月影禁界",voice:"月落無聲，影界——開！"}
+}};
