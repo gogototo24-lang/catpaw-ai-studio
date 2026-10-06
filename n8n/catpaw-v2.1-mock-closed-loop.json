@@ -1,0 +1,138 @@
+{
+  "name": "Catpaw AI Studio v2.1 Mock Closed Loop",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "catpaw-v21",
+        "responseMode": "lastNode"
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const x=$json.body||$json; const req=['job_id','character','production_pack']; for(const k of req){if(!x[k]) throw new Error('Missing '+k);} return [{json:{...x,bridge_status:'validated'}}];"
+      },
+      "name": "Validate Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const x=$json; if(x.canon && x.canon!=='CANON_LOCKED') throw new Error('CANON gate blocked'); if(x.master_status && !['APPROVED','MASTER_FOUND'].includes(x.master_status)) x.master_warning='Master not approved; mock only'; return [{json:{...x,gate_status:'passed_mock'}}];"
+      },
+      "name": "CANON Master Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const x=$json; return [{json:{...x,provider:'pixverse',provider_mode:'mock',status:'generating'}}];"
+      },
+      "name": "Provider Router",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const x=$json; return [{json:{...x,status:'generated',asset_url:'',mock:true,provider_result:'PixVerse mock completed',updated_at:new Date().toISOString()}}];"
+      },
+      "name": "PixVerse MOCK",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const x=$json; return [{json:{callback:{job_id:x.job_id,status:x.status,provider:x.provider,asset_url:x.asset_url,error:'',updated_at:x.updated_at},sheet_row:{job_id:x.job_id,character:x.character,status:x.status,provider:x.provider,asset_url:x.asset_url,created_at:x.created_at||'',note:'v2.1 MOCK - no credits used'}}}];"
+      },
+      "name": "Build Callback + Sheet Row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Payload": {
+      "main": [
+        [
+          {
+            "node": "CANON Master Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CANON Master Gate": {
+      "main": [
+        [
+          {
+            "node": "Provider Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Provider Router": {
+      "main": [
+        [
+          {
+            "node": "PixVerse MOCK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PixVerse MOCK": {
+      "main": [
+        [
+          {
+            "node": "Build Callback + Sheet Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {}
+}
