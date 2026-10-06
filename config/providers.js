@@ -1,6 +1,6 @@
 window.CATPAW_PROVIDERS={
-version:"2.0",
-default_video:"pixverse",
+version:"2.1",
+default_video:"pixverse_mock",
 video:{
  pixverse:{enabled:false,mode:"n8n_proxy",label:"PixVerse"},
  flow:{enabled:false,mode:"manual_handoff",label:"Flow"}
