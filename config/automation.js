@@ -1,9 +1,12 @@
 window.CATPAW_AUTOMATION={
-version:"1.6",
+version:"1.8",
 enabled:false,
+test_mode:true,
 provider:"n8n",
 webhook_url:"",
-send_fields:["character","duration","style","prompt","status"],
+max_retries:2,
+retry_delay_ms:1500,
+send_fields:["job_id","character","duration","style","status","production_pack","created_at"],
 allowed_status:["草稿","待生成","待剪輯","完成"],
-security_note:"不要把 API key、token 或私密 webhook 寫入公開 GitHub。正式串接時由安全後端或環境變數注入。"
+security_note:"公開前端不保存私密 webhook、API key 或 token；正式網址由安全後端或部署環境注入。"
 };
