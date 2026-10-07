@@ -1,0 +1,7 @@
+{
+  "pipeline_id": "A", "provider": "runninghub", "count": 1,
+  "duration_seconds": 5, "auto_publish": false, "paid_enabled": false,
+  "max_cost_twd": null, "credential_configured": false,
+  "webapp_id": "", "node_mapping": [], "mapping_verified": false,
+  "character_id": "MZ_019", "asset_id": "AST_0008", "batch_approved": false
+}
