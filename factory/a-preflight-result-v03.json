@@ -1,0 +1,22 @@
+{
+  "version": "factory.preflight.v0.3",
+  "readiness": "blocked",
+  "blocking_reasons": [
+    "BOUNDED_BUDGET_REQUIRED_0_TO_100_TWD",
+    "RUNNINGHUB_SECRET_NOT_CONFIRMED",
+    "ACTUAL_WEBAPP_ID_REQUIRED",
+    "ACTUAL_NODE_MAPPING_NOT_VERIFIED",
+    "CHARACTER_CANON_NOT_LOCKED",
+    "CHARACTER_ASSET_NOT_READY",
+    "CHARACTER_REVIEW_NOT_APPROVED",
+    "ASSET_NOT_APPROVED",
+    "HTTPS_ASSET_URL_REQUIRED",
+    "SINGLE_PAID_BATCH_NOT_APPROVED"
+  ],
+  "submitted": false,
+  "paid_enabled": false,
+  "auto_publish": false,
+  "actual_cost_twd": 0,
+  "live_execution_supported": false,
+  "note": "Readiness only; URL accessibility, live secrets, pricing and App capabilities still require verification."
+}
