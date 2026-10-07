@@ -1,0 +1,601 @@
+[
+  {
+    "schema_version": "factory.job.v0.2",
+    "job_id": "factory-v02-A",
+    "pipeline_id": "A",
+    "mode": "mock",
+    "brief": "貓掌／喵台灣完整離線 Mock 測試",
+    "controls": {
+      "paid_enabled": false,
+      "auto_publish": false
+    },
+    "cost": {
+      "currency": "TWD",
+      "estimated": 0,
+      "reserved": 0,
+      "actual": 0,
+      "provider_credits": 0
+    },
+    "approval": {
+      "input": "approved_mock",
+      "output": "approved_mock",
+      "publish": "pending"
+    },
+    "input_hash": "51fc816fa3dc04850a44dd51c11572b5333bcb4d0d6f07b1434dc605e0081c49",
+    "state": "ready",
+    "events": [
+      {
+        "state": "draft",
+        "at": "2026-10-07T23:07:17.776329+00:00"
+      },
+      {
+        "state": "validated",
+        "at": "2026-10-07T23:07:17.776342+00:00"
+      },
+      {
+        "state": "queued",
+        "at": "2026-10-07T23:07:17.776344+00:00"
+      },
+      {
+        "state": "running",
+        "at": "2026-10-07T23:07:17.776346+00:00"
+      },
+      {
+        "state": "awaiting_review",
+        "at": "2026-10-07T23:07:17.776805+00:00"
+      },
+      {
+        "state": "ready",
+        "at": "2026-10-07T23:07:17.776810+00:00"
+      }
+    ],
+    "steps": [
+      {
+        "step_id": "prompt",
+        "provider": "mock",
+        "provider_task_id": "mock-e901a03c73a204bd",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "first_frame",
+        "provider": "mock",
+        "provider_task_id": "mock-4bfa707c4080dcb0",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "video",
+        "provider": "mock",
+        "provider_task_id": "mock-4196862e663b3ba7",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "audio",
+        "provider": "mock",
+        "provider_task_id": "mock-78b07576afaba6dc",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "compose",
+        "provider": "mock",
+        "provider_task_id": "mock-068c3f5091af6f31",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "mock-e901a03c73a204bd-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "prompt"
+      },
+      {
+        "asset_id": "mock-4bfa707c4080dcb0-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "first_frame"
+      },
+      {
+        "asset_id": "mock-4196862e663b3ba7-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "video"
+      },
+      {
+        "asset_id": "mock-78b07576afaba6dc-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "audio"
+      },
+      {
+        "asset_id": "mock-068c3f5091af6f31-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "compose"
+      }
+    ],
+    "missing_external_settings": [
+      "RUNNINGHUB_API_KEY",
+      "WebApp ID and actual nodeInfo mapping",
+      "approved character/master asset and CANON database gate"
+    ],
+    "next_provider_candidate": "RunningHub existing video adapter",
+    "next_provider_enabled": false,
+    "published": false,
+    "mock": true,
+    "success": true
+  },
+  {
+    "schema_version": "factory.job.v0.2",
+    "job_id": "factory-v02-B",
+    "pipeline_id": "B",
+    "mode": "mock",
+    "brief": "成人時尚寫真完整離線 Mock 測試",
+    "controls": {
+      "paid_enabled": false,
+      "auto_publish": false
+    },
+    "cost": {
+      "currency": "TWD",
+      "estimated": 0,
+      "reserved": 0,
+      "actual": 0,
+      "provider_credits": 0
+    },
+    "approval": {
+      "input": "approved_mock",
+      "output": "approved_mock",
+      "publish": "pending"
+    },
+    "input_hash": "26ae1082e10c985246f073279499774c47ba5b859c274ed40f9b4be91152b533",
+    "state": "ready",
+    "events": [
+      {
+        "state": "draft",
+        "at": "2026-10-07T23:07:17.777070+00:00"
+      },
+      {
+        "state": "validated",
+        "at": "2026-10-07T23:07:17.777073+00:00"
+      },
+      {
+        "state": "queued",
+        "at": "2026-10-07T23:07:17.777075+00:00"
+      },
+      {
+        "state": "running",
+        "at": "2026-10-07T23:07:17.777076+00:00"
+      },
+      {
+        "state": "awaiting_review",
+        "at": "2026-10-07T23:07:17.777264+00:00"
+      },
+      {
+        "state": "ready",
+        "at": "2026-10-07T23:07:17.777268+00:00"
+      }
+    ],
+    "steps": [
+      {
+        "step_id": "identity",
+        "provider": "mock",
+        "provider_task_id": "mock-0eabe6d48a5a5999",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "image",
+        "provider": "mock",
+        "provider_task_id": "mock-34aca444c244452c",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "quality",
+        "provider": "mock",
+        "provider_task_id": "mock-14184f6c8e76d578",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "package",
+        "provider": "mock",
+        "provider_task_id": "mock-0285ba36f34da8af",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "mock-0eabe6d48a5a5999-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "identity"
+      },
+      {
+        "asset_id": "mock-34aca444c244452c-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "image"
+      },
+      {
+        "asset_id": "mock-14184f6c8e76d578-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "quality"
+      },
+      {
+        "asset_id": "mock-0285ba36f34da8af-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "package"
+      }
+    ],
+    "missing_external_settings": [
+      "dedicated image App ID and nodeInfo",
+      "RUNNINGHUB_API_KEY",
+      "adult identity/reference authorization"
+    ],
+    "next_provider_candidate": "RunningHub dedicated image AI App",
+    "next_provider_enabled": false,
+    "published": false,
+    "mock": true,
+    "success": true
+  },
+  {
+    "schema_version": "factory.job.v0.2",
+    "job_id": "factory-v02-C",
+    "pipeline_id": "C",
+    "mode": "mock",
+    "brief": "音樂 MV完整離線 Mock 測試",
+    "controls": {
+      "paid_enabled": false,
+      "auto_publish": false
+    },
+    "cost": {
+      "currency": "TWD",
+      "estimated": 0,
+      "reserved": 0,
+      "actual": 0,
+      "provider_credits": 0
+    },
+    "approval": {
+      "input": "approved_mock",
+      "output": "approved_mock",
+      "publish": "pending"
+    },
+    "input_hash": "bea64061fdbecfb84d7ed2345b7241d9cbae6e45f425b297784a8203eef18fc5",
+    "state": "ready",
+    "events": [
+      {
+        "state": "draft",
+        "at": "2026-10-07T23:07:17.777487+00:00"
+      },
+      {
+        "state": "validated",
+        "at": "2026-10-07T23:07:17.777491+00:00"
+      },
+      {
+        "state": "queued",
+        "at": "2026-10-07T23:07:17.777492+00:00"
+      },
+      {
+        "state": "running",
+        "at": "2026-10-07T23:07:17.777493+00:00"
+      },
+      {
+        "state": "awaiting_review",
+        "at": "2026-10-07T23:07:17.777722+00:00"
+      },
+      {
+        "state": "ready",
+        "at": "2026-10-07T23:07:17.777725+00:00"
+      }
+    ],
+    "steps": [
+      {
+        "step_id": "lyrics",
+        "provider": "mock",
+        "provider_task_id": "mock-8f414b4e39394536",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "voice",
+        "provider": "mock",
+        "provider_task_id": "mock-1a7181313358edb4",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "music",
+        "provider": "mock",
+        "provider_task_id": "mock-1220a43c96c30ba9",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "video",
+        "provider": "mock",
+        "provider_task_id": "mock-7fc318d80adc21c3",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "mix",
+        "provider": "mock",
+        "provider_task_id": "mock-5f8ddfeb456dd0cb",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "compose",
+        "provider": "mock",
+        "provider_task_id": "mock-81cfe52d583cb199",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "mock-8f414b4e39394536-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "lyrics"
+      },
+      {
+        "asset_id": "mock-1a7181313358edb4-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "voice"
+      },
+      {
+        "asset_id": "mock-1220a43c96c30ba9-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "music"
+      },
+      {
+        "asset_id": "mock-7fc318d80adc21c3-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "video"
+      },
+      {
+        "asset_id": "mock-5f8ddfeb456dd0cb-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "mix"
+      },
+      {
+        "asset_id": "mock-81cfe52d583cb199-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "compose"
+      }
+    ],
+    "missing_external_settings": [
+      "API base and service health",
+      "approved audio/video inputs",
+      "real singing provider if vocals required",
+      "durable MV job/result storage"
+    ],
+    "next_provider_candidate": "AI Music Studio v2 existing compose service",
+    "next_provider_enabled": false,
+    "published": false,
+    "mock": true,
+    "success": true
+  },
+  {
+    "schema_version": "factory.job.v0.2",
+    "job_id": "factory-v02-D",
+    "pipeline_id": "D",
+    "mode": "mock",
+    "brief": "長篇漫劇完整離線 Mock 測試",
+    "controls": {
+      "paid_enabled": false,
+      "auto_publish": false
+    },
+    "cost": {
+      "currency": "TWD",
+      "estimated": 0,
+      "reserved": 0,
+      "actual": 0,
+      "provider_credits": 0
+    },
+    "approval": {
+      "input": "approved_mock",
+      "output": "approved_mock",
+      "publish": "pending"
+    },
+    "input_hash": "b9a9610f1ed13b15d4d180b5da7cb575e6782d5702bdc57e5fe63d1bd4370fbe",
+    "state": "ready",
+    "events": [
+      {
+        "state": "draft",
+        "at": "2026-10-07T23:07:17.778703+00:00"
+      },
+      {
+        "state": "validated",
+        "at": "2026-10-07T23:07:17.778711+00:00"
+      },
+      {
+        "state": "queued",
+        "at": "2026-10-07T23:07:17.778713+00:00"
+      },
+      {
+        "state": "running",
+        "at": "2026-10-07T23:07:17.778714+00:00"
+      },
+      {
+        "state": "awaiting_review",
+        "at": "2026-10-07T23:07:17.779378+00:00"
+      },
+      {
+        "state": "ready",
+        "at": "2026-10-07T23:07:17.779385+00:00"
+      }
+    ],
+    "steps": [
+      {
+        "step_id": "script",
+        "provider": "mock",
+        "provider_task_id": "mock-6eb1a55a3aaf234e",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "storyboard",
+        "provider": "mock",
+        "provider_task_id": "mock-c0f82a450380ccd2",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "video",
+        "provider": "mock",
+        "provider_task_id": "mock-0d89a1c991789a25",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "voice",
+        "provider": "mock",
+        "provider_task_id": "mock-a829a282c5d96e5e",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "compose",
+        "provider": "mock",
+        "provider_task_id": "mock-0953dde84ff73cc5",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      },
+      {
+        "step_id": "package",
+        "provider": "mock",
+        "provider_task_id": "mock-9af99635b7c329ea",
+        "state": "generated",
+        "mock": true,
+        "attempt": 1
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "mock-6eb1a55a3aaf234e-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "script"
+      },
+      {
+        "asset_id": "mock-c0f82a450380ccd2-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "storyboard"
+      },
+      {
+        "asset_id": "mock-0d89a1c991789a25-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "video"
+      },
+      {
+        "asset_id": "mock-a829a282c5d96e5e-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "voice"
+      },
+      {
+        "asset_id": "mock-0953dde84ff73cc5-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "compose"
+      },
+      {
+        "asset_id": "mock-9af99635b7c329ea-asset",
+        "kind": "mock_manifest",
+        "mock": true,
+        "playable": false,
+        "asset_url": "",
+        "step": "package"
+      }
+    ],
+    "missing_external_settings": [
+      "episode/shot bible",
+      "approved assets",
+      "segment composition config",
+      "durable shot DAG/resume store",
+      "API base and service health"
+    ],
+    "next_provider_candidate": "AI Music Studio v2 per-segment compose service",
+    "next_provider_enabled": false,
+    "published": false,
+    "mock": true,
+    "success": true
+  }
+]
