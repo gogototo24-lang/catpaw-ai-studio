@@ -1,8 +1,17 @@
 window.CATPAW_PROVIDERS={
-version:"2.2",
-factory_mode:"mock",
+version:"2.3",
+factory_mode:"p2_locked",
 paid_enabled:false,
 publish_enabled:false,
+p2:{
+ pipeline_id:"A",
+ provider:"runninghub",
+ live_enabled:false,
+ publish_enabled:false,
+ max_budget_twd:15,
+ duration_seconds:5,
+ mode:"single_job_only"
+},
 defaults:{
  image:"factory_mock_image",
  video:"factory_mock_video",
