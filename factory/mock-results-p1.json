@@ -1,0 +1,37 @@
+{
+  "factory_version": "0.2",
+  "phase": "P1",
+  "executed_at": "2026-10-08T10:29:00+08:00",
+  "summary": {
+    "pipelines": 4,
+    "passed": 4,
+    "failed": 0,
+    "paid_calls": 0,
+    "publish_calls": 0,
+    "actual_cost_twd": 0
+  },
+  "results": [
+    {"pipeline_id":"A","name":"貓掌江湖＋喵台灣","status":"awaiting_review","steps_completed":6,"steps_total":6,"success":true},
+    {"pipeline_id":"B","name":"成年時尚寫真（非露骨）","status":"awaiting_review","steps_completed":5,"steps_total":5,"success":true},
+    {"pipeline_id":"C","name":"音樂 MV","status":"awaiting_review","steps_completed":7,"steps_total":7,"success":true},
+    {"pipeline_id":"D","name":"長篇漫劇","status":"awaiting_review","steps_completed":7,"steps_total":7,"success":true}
+  ],
+  "safety": {
+    "paid_enabled": false,
+    "publish_enabled": false,
+    "real_providers_called": [],
+    "mock_assets_publishable": false
+  },
+  "next_safe_provider": {
+    "pipeline_id": "A",
+    "provider": "RunningHub",
+    "mode": "single_job_only",
+    "requirements": [
+      "RUNNINGHUB_API_KEY stored as secret",
+      "verified WebApp ID",
+      "verified nodeInfo mapping",
+      "explicit single-job approval",
+      "budget cap before submit"
+    ]
+  }
+}
