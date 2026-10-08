@@ -30,8 +30,13 @@ image:{
  factory_mock_image:{enabled:true,mode:"local_mock",label:"Factory Image Mock",paid:false}
 },
 audio:{
- ai_music_studio_v2:{enabled:false,mode:"remote_service",label:"AI Music Studio v2",paid:false},
+ ai_music_studio_v2:{enabled:true,mode:"remote_service",label:"AI Music Studio v2",paid:false},
  factory_mock_audio:{enabled:true,mode:"local_mock",label:"Factory Audio Mock",paid:false}
+},
+music:{
+ yue2:{enabled:false,mode:"self_hosted_gpu",label:"YuE2 Full Song",paid:false,requires:["YUE2_API_URL","MUSIC_SERVICE_TOKEN"]},
+ ace_step:{enabled:false,mode:"self_hosted_gpu",label:"ACE-Step",paid:false,requires:["ACESTEP_API_URL","MUSIC_SERVICE_TOKEN"]},
+ musicgen:{enabled:true,mode:"local_or_gpu",label:"MusicGen BGM",paid:false}
 },
 mv:{
  factory_mock_mv:{enabled:true,mode:"local_mock",label:"Factory MV Mock",paid:false}
