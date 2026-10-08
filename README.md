@@ -42,3 +42,27 @@ A/B/C/D 已各跑 1 筆完整 Mock：
 A 產線 → RunningHub → 單筆低成本測試 → 人工審核。
 
 RunningHub WebApp ID、nodeInfo mapping、Secret 與單筆預算封頂未完成前，不切 live。
+
+
+## v0.3 / P2
+
+P2 已加入「A 產線 → RunningHub → 單筆 5 秒真實測片」的受控入口。
+
+安全限制：
+- 只允許 pipeline A
+- provider 固定 runninghub
+- 一次只允許 1 筆 active job
+- 片長固定 5 秒
+- 單筆預算上限預設 NT$15
+- 必須帶明確核准字串 `APPROVE_SINGLE_PAID_TEST`
+- `FACTORY_LIVE_ENABLED=false` 時一律拒絕
+- `FACTORY_PUBLISH_ENABLED=false` 必須保持關閉
+- 完成後只停在審核，不自動發布
+
+公開總控頁會讀取：
+`GET /api/factory/p2/status`
+
+管理端真實提交：
+`POST /api/factory/p2/submit`
+
+目前預設仍為鎖定，不會送出付費任務。
