@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CatPaw AI Factory Job",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "job_id",
+    "pipeline_id",
+    "mode",
+    "status",
+    "budget",
+    "approval",
+    "steps"
+  ],
+  "properties": {
+    "schema_version": {"const": "factory.job.v1"},
+    "job_id": {"type": "string", "minLength": 1},
+    "pipeline_id": {"enum": ["A", "B", "C", "D"]},
+    "universe": {"type": ["string", "null"]},
+    "mode": {"const": "mock"},
+    "status": {
+      "enum": [
+        "draft",
+        "validated",
+        "awaiting_approval",
+        "queued",
+        "running",
+        "awaiting_review",
+        "ready",
+        "blocked",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "source_ref": {"type": "object"},
+    "canon_ref": {"type": ["object", "null"]},
+    "inputs": {"type": "object"},
+    "output_spec": {"type": "object"},
+    "budget": {
+      "type": "object",
+      "required": ["currency", "paid_enabled", "estimated", "actual"],
+      "properties": {
+        "currency": {"const": "TWD"},
+        "max_amount": {"type": ["number", "null"], "minimum": 0},
+        "paid_enabled": {"const": false},
+        "estimated": {"type": "number", "minimum": 0},
+        "actual": {"type": "number", "minimum": 0}
+      }
+    },
+    "approval": {
+      "type": "object",
+      "required": ["asset", "paid_batch", "publish"],
+      "properties": {
+        "asset": {"enum": ["pending", "approved", "rejected"]},
+        "paid_batch": {"const": "pending"},
+        "publish": {"const": "pending"}
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["step_id", "provider", "status", "attempt", "mock"],
+        "properties": {
+          "step_id": {"type": "string"},
+          "depends_on": {"type": "array", "items": {"type": "string"}},
+          "provider": {"type": "string"},
+          "provider_task_id": {"type": ["string", "null"]},
+          "status": {"enum": ["pending", "running", "completed", "blocked", "failed"]},
+          "attempt": {"type": "integer", "minimum": 0},
+          "mock": {"const": true},
+          "cost_twd": {"type": "number", "minimum": 0}
+        }
+      }
+    }
+  }
+}
