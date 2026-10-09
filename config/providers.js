@@ -34,6 +34,7 @@ audio:{
  factory_mock_audio:{enabled:true,mode:"local_mock",label:"Factory Audio Mock",paid:false}
 },
 music:{
+ runpod_yue2:{enabled:false,mode:"serverless_gpu",label:"RunPod YuE2 Full Song",paid:true,requires:["RUNPOD_API_KEY","RUNPOD_ENDPOINT_ID"]},
  yue2:{enabled:false,mode:"self_hosted_gpu",label:"YuE2 Full Song",paid:false,requires:["YUE2_API_URL","MUSIC_SERVICE_TOKEN"]},
  ace_step:{enabled:false,mode:"self_hosted_gpu",label:"ACE-Step",paid:false,requires:["ACESTEP_API_URL","MUSIC_SERVICE_TOKEN"]},
  musicgen:{enabled:true,mode:"local_or_gpu",label:"MusicGen BGM",paid:false}
