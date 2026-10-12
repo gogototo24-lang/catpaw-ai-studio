@@ -1,0 +1,39 @@
+{
+  "schema_version": "factory.workflow-candidates.v1",
+  "checked_at": "2026-10-13",
+  "candidates": [
+    {
+      "id": "ltx_promptrelay_vbvr",
+      "url": "https://www.runninghub.ai/ai-detail/2052059081292165122",
+      "status": "PUBLIC_DESCRIPTION_ONLY",
+      "mapping_verified": false,
+      "live_test_passed": false,
+      "cost_verified": false,
+      "priority": 1,
+      "reason": "時間段提示詞，已有海外站公開頁；适合三鏡順序對照",
+      "limit": "15秒與9:16需實際參數確認"
+    },
+    {
+      "id": "ltx_firstframe_suite35",
+      "url": "https://www.runninghub.ai/ai-detail/2073000297074827264",
+      "status": "PUBLIC_DESCRIPTION_ONLY",
+      "mapping_verified": false,
+      "live_test_passed": false,
+      "cost_verified": false,
+      "priority": 2,
+      "reason": "首幀參考加全局及分鏡提示詞",
+      "limit": "三階高清可能增加耗時和費用，僅1次公開運行不可當品質證據"
+    },
+    {
+      "id": "ltx_promptrelay_long",
+      "url": "https://www.runninghub.ai/post/2050902938465390593",
+      "status": "NODE_LIST_CONFIRMED",
+      "mapping_verified": false,
+      "live_test_passed": false,
+      "cost_verified": false,
+      "priority": 3,
+      "reason": "已確認PromptRelayEncodeTimeline、音訊和影片合成節點",
+      "limit": "52種節點，先驗15秒小樣，不直接測長片"
+    }
+  ]
+}
