@@ -50,6 +50,7 @@ button,a.btn{display:inline-block;border:0;border-radius:10px;padding:11px 13px;
 <p><a class="btn secondary" href="./">← 回貓掌 AI Studio</a></p>
 </main>
 <script src="factory/mock-runner.js"></script>
+<script src="factory/core-guards.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 function buildCards(){
@@ -99,29 +100,33 @@ async function checkP2(){
     $("p2Status").textContent="暫時無法讀取 Worker P2 狀態："+e.message+"\n目前仍視為鎖定，不會送出付費任務。";
   }
 }
-function buildP2Payload(){
-  const frame=$("p2Frame").value.trim();
-  const prompt=$("p2Prompt").value.trim();
-  const budget=Number($("p2Budget").value||0);
-  const payload={
-    pipeline_id:"A",
-    provider:"runninghub",
-    universe:"貓掌江湖",
-    title:"CatPaw P2 單筆 5 秒測片",
-    first_frame_url:frame,
-    prompt,
-    budget_max_twd:budget,
-    publish:false,
-    approval:"APPROVE_SINGLE_PAID_TEST",
-    idempotency_key:"catpaw-p2-"+new Date().toISOString().slice(0,10)+"-"+Math.random().toString(36).slice(2,8)
-  };
-  $("p2Payload").textContent=JSON.stringify(payload,null,2);
-  return payload;
+let payloadBuild=0;
+function invalidatePayload(){
+  payloadBuild++;
+  $("p2Payload").textContent="尚未建立。輸入已變更，請重新建立測試資料。";
+}
+async function buildP2Payload(){
+  const build=++payloadBuild;
+  try{
+    const payload=await CATPAW_CORE.buildP2Payload({
+      first_frame_url:$("p2Frame").value,
+      prompt:$("p2Prompt").value,
+      budget_max_twd:Number($("p2Budget").value)
+    });
+    if(build!==payloadBuild) return null;
+    $("p2Payload").textContent=JSON.stringify(payload,null,2);
+    return payload;
+  }catch(e){
+    if(build===payloadBuild) $("p2Payload").textContent="無法建立："+e.message;
+    return null;
+  }
 }
 async function copyP2Payload(){
-  const t=$("p2Payload").textContent;
-  if(t.startsWith("尚未")) buildP2Payload();
-  try{await navigator.clipboard.writeText($("p2Payload").textContent);alert("P2 Payload 已複製")}catch{alert("請長按 JSON 手動複製")}
+  const payload=await buildP2Payload();
+  if(!payload) return;
+  const text=JSON.stringify(payload,null,2);
+  try{await navigator.clipboard.writeText(text);alert("P2 Payload 已複製")}catch{alert("請長按 JSON 手動複製")}
 }
+for(const id of ["p2Frame","p2Prompt","p2Budget"]) $(id).addEventListener("input",invalidatePayload);
 buildCards();renderHistory();checkP2();
 </script></body></html>
