@@ -1,0 +1,279 @@
+{
+  "name": "CatPaw PixVerse v2｜I2V Single Job",
+  "nodes": [
+    {
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "catpaw-pixverse-v2",
+        "responseMode": "lastNode"
+      }
+    },
+    {
+      "name": "Validate + Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -600,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const x=$json.body ?? $json;\nif(!x.prompt) throw new Error('prompt required');\nif(!x.img_id) throw new Error('img_id required');\nif(x.publish===true) throw new Error('auto publish is locked');\nif(x.batch===true) throw new Error('batch generation is locked');\nconst duration=Number(x.duration ?? 5);\nif(![5,8,10].includes(duration)) throw new Error('duration must be 5/8/10 for this guarded workflow');\nreturn [{json:{\n  job_id:x.job_id ?? 'PV-'+Date.now(),\n  img_id:Number(x.img_id),\n  prompt:x.prompt,\n  negative_prompt:x.negative_prompt ?? 'deformed face, extra limbs, duplicate weapon, text artifacts, watermark',\n  model:x.model ?? 'v6',\n  quality:x.quality ?? '720p',\n  duration,\n  motion_mode:x.motion_mode ?? 'normal',\n  seed:Number(x.seed ?? 0),\n  template_id:x.template_id ? Number(x.template_id) : undefined,\n  camera_movement:x.camera_movement ?? undefined,\n  paid:true,\n  publish:false,\n  batch:false\n}}];"
+      }
+    },
+    {
+      "name": "PixVerse Submit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -340,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://app-api.pixverse.ai/openapi/v2/video/img/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API-KEY",
+              "value": "={{$env.PIXVERSE_API_KEY}}"
+            },
+            {
+              "name": "Ai-trace-id",
+              "value": "={{$now.toMillis() + '-' + $json.job_id}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({duration:$json.duration,img_id:$json.img_id,model:$json.model,motion_mode:$json.motion_mode,prompt:$json.prompt,negative_prompt:$json.negative_prompt,quality:$json.quality,seed:$json.seed,...($json.template_id?{template_id:$json.template_id}:{}),...($json.camera_movement?{camera_movement:$json.camera_movement}:{})}) }}"
+      }
+    },
+    {
+      "name": "Check Submit",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const r=$json;\nif(r.ErrCode!==0) throw new Error('PixVerse submit failed: '+(r.ErrMsg||JSON.stringify(r)));\nif(!r.Resp?.video_id) throw new Error('PixVerse video_id missing');\nreturn [{json:{video_id:r.Resp.video_id,poll_count:0}}];"
+      }
+    },
+    {
+      "name": "Wait 5s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        0
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      }
+    },
+    {
+      "name": "PixVerse Poll",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        380,
+        0
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{'https://app-api.pixverse.ai/openapi/v2/video/result/'+$json.video_id}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API-KEY",
+              "value": "={{$env.PIXVERSE_API_KEY}}"
+            },
+            {
+              "name": "Ai-trace-id",
+              "value": "={{$now.toMillis() + '-poll-' + $json.video_id}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Normalize Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        620,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const r=$json;\nif(r.ErrCode!==0) throw new Error('PixVerse poll failed: '+(r.ErrMsg||JSON.stringify(r)));\nconst x=r.Resp||{};\nif(x.status===7) throw new Error('PixVerse moderation failed');\nif(x.status===8) throw new Error('PixVerse generation failed');\nreturn [{json:{done:x.status===1,video_id:x.id,status:x.status,url:x.url||null,result:x}}];"
+      }
+    },
+    {
+      "name": "Done?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        860,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.done}}",
+              "operation": "isTrue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Return Result",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        -120
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "provider",
+              "value": "pixverse"
+            },
+            {
+              "name": "status",
+              "value": "success"
+            },
+            {
+              "name": "video_url",
+              "value": "={{$json.url}}"
+            },
+            {
+              "name": "video_id",
+              "value": "={{$json.video_id}}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate + Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate + Gate": {
+      "main": [
+        [
+          {
+            "node": "PixVerse Submit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PixVerse Submit": {
+      "main": [
+        [
+          {
+            "node": "Check Submit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Submit": {
+      "main": [
+        [
+          {
+            "node": "Wait 5s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 5s": {
+      "main": [
+        [
+          {
+            "node": "PixVerse Poll",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PixVerse Poll": {
+      "main": [
+        [
+          {
+            "node": "Normalize Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Result": {
+      "main": [
+        [
+          {
+            "node": "Done?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Done?": {
+      "main": [
+        [
+          {
+            "node": "Return Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 5s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
