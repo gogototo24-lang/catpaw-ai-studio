@@ -1,12 +1,12 @@
 {
-  "name": "CatPaw PixVerse v2｜I2V Single Job",
+  "name": "CatPaw PixVerse v2｜I2V End-to-End",
   "nodes": [
     {
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -820,
+        -1120,
         0
       ],
       "parameters": {
@@ -20,11 +20,134 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -600,
+        -900,
         0
       ],
       "parameters": {
-        "jsCode": "const x=$json.body ?? $json;\nif(!x.prompt) throw new Error('prompt required');\nif(!x.img_id) throw new Error('img_id required');\nif(x.publish===true) throw new Error('auto publish is locked');\nif(x.batch===true) throw new Error('batch generation is locked');\nconst duration=Number(x.duration ?? 5);\nif(![5,8,10].includes(duration)) throw new Error('duration must be 5/8/10 for this guarded workflow');\nreturn [{json:{\n  job_id:x.job_id ?? 'PV-'+Date.now(),\n  img_id:Number(x.img_id),\n  prompt:x.prompt,\n  negative_prompt:x.negative_prompt ?? 'deformed face, extra limbs, duplicate weapon, text artifacts, watermark',\n  model:x.model ?? 'v6',\n  quality:x.quality ?? '720p',\n  duration,\n  motion_mode:x.motion_mode ?? 'normal',\n  seed:Number(x.seed ?? 0),\n  template_id:x.template_id ? Number(x.template_id) : undefined,\n  camera_movement:x.camera_movement ?? undefined,\n  paid:true,\n  publish:false,\n  batch:false\n}}];"
+        "jsCode": "const x=$json.body ?? $json;\nif(!x.prompt) throw new Error('prompt required');\nif(!x.img_id && !x.image_url) throw new Error('img_id or image_url required');\nif(x.publish===true) throw new Error('auto publish is locked');\nif(x.batch===true) throw new Error('batch generation is locked');\nconst duration=Number(x.duration ?? 5);\nif(![5,8,10].includes(duration)) throw new Error('duration must be 5/8/10');\nreturn [{json:{\n  job_id:x.job_id ?? 'PV-'+Date.now(),\n  image_url:x.image_url || null,\n  img_id:x.img_id ? Number(x.img_id) : null,\n  prompt:x.prompt,\n  negative_prompt:x.negative_prompt ?? 'deformed face, extra limbs, duplicate weapon, text artifacts, watermark',\n  model:x.model ?? 'v6',\n  quality:x.quality ?? '720p',\n  duration,\n  motion_mode:x.motion_mode ?? 'normal',\n  seed:Number(x.seed ?? 0),\n  template_id:x.template_id ? Number(x.template_id) : undefined,\n  camera_movement:x.camera_movement ?? undefined,\n  paid:true,publish:false,batch:false\n}}];"
+      }
+    },
+    {
+      "name": "Has img_id?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -680,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json.img_id || 0}}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Download Reference Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -460,
+        120
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{$json.image_url}}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "PixVerse Upload Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -220,
+        120
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://app-api.pixverse.ai/openapi/v2/image/upload",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "API-KEY",
+              "value": "={{$env.PIXVERSE_API_KEY}}"
+            },
+            {
+              "name": "Ai-trace-id",
+              "value": "={{$now.toMillis() + '-upload'}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image",
+              "inputDataFieldName": "data"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Extract img_id",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        20,
+        120
+      ],
+      "parameters": {
+        "jsCode": "const r=$json;\nif(r.ErrCode!==0) throw new Error('PixVerse upload failed: '+(r.ErrMsg||JSON.stringify(r)));\nconst imgId=r.Resp?.img_id ?? r.Resp?.id;\nif(!imgId) throw new Error('PixVerse img_id missing after upload');\nreturn [{json:{...$('Validate + Gate').item.json,img_id:Number(imgId)}}];"
+      }
+    },
+    {
+      "name": "Use Existing img_id",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -220,
+        -120
+      ],
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "img_id",
+              "value": "={{$json.img_id}}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": false
+        }
+      }
+    },
+    {
+      "name": "Build Submit Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const x=$json;\nreturn [{json:{...x,submit_body:{\n duration:x.duration,\n img_id:Number(x.img_id),\n model:x.model,\n motion_mode:x.motion_mode,\n prompt:x.prompt,\n negative_prompt:x.negative_prompt,\n quality:x.quality,\n seed:x.seed,\n ...(x.template_id?{template_id:x.template_id}:{}),\n ...(x.camera_movement?{camera_movement:x.camera_movement}:{})\n}}}];"
       }
     },
     {
@@ -32,7 +155,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -340,
+        500,
         0
       ],
       "parameters": {
@@ -58,7 +181,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({duration:$json.duration,img_id:$json.img_id,model:$json.model,motion_mode:$json.motion_mode,prompt:$json.prompt,negative_prompt:$json.negative_prompt,quality:$json.quality,seed:$json.seed,...($json.template_id?{template_id:$json.template_id}:{}),...($json.camera_movement?{camera_movement:$json.camera_movement}:{})}) }}"
+        "body": "={{ JSON.stringify($json.submit_body) }}"
       }
     },
     {
@@ -66,7 +189,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -100,
+        740,
         0
       ],
       "parameters": {
@@ -78,7 +201,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        140,
+        980,
         0
       ],
       "parameters": {
@@ -91,7 +214,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        380,
+        1220,
         0
       ],
       "parameters": {
@@ -117,7 +240,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        620,
+        1460,
         0
       ],
       "parameters": {
@@ -129,7 +252,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        860,
+        1700,
         0
       ],
       "parameters": {
@@ -148,7 +271,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1100,
+        1940,
         -120
       ],
       "parameters": {
@@ -188,6 +311,79 @@
       ]
     },
     "Validate + Gate": {
+      "main": [
+        [
+          {
+            "node": "Has img_id?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has img_id?": {
+      "main": [
+        [
+          {
+            "node": "Use Existing img_id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download Reference Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Reference Image": {
+      "main": [
+        [
+          {
+            "node": "PixVerse Upload Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PixVerse Upload Image": {
+      "main": [
+        [
+          {
+            "node": "Extract img_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract img_id": {
+      "main": [
+        [
+          {
+            "node": "Build Submit Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Existing img_id": {
+      "main": [
+        [
+          {
+            "node": "Build Submit Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Submit Payload": {
       "main": [
         [
           {
