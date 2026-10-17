@@ -2,6 +2,63 @@
   "name": "CatPaw PixVerse v2｜I2V End-to-End",
   "nodes": [
     {
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        -260
+      ],
+      "parameters": {}
+    },
+    {
+      "name": "Test Payload",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -900,
+        -260
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "image_url",
+              "value": "https://res.cloudinary.com/y8tb8gsj/image/upload/v1790299930/1000018915.png"
+            },
+            {
+              "name": "prompt",
+              "value": "cinematic female wuxia cat warrior, subtle head turn, gentle cloth movement, soft glowing energy, stable face, stable costume, stable weapon, locked composition, high character consistency"
+            },
+            {
+              "name": "model",
+              "value": "v6"
+            },
+            {
+              "name": "quality",
+              "value": "720p"
+            }
+          ],
+          "number": [
+            {
+              "name": "duration",
+              "value": 5
+            }
+          ],
+          "boolean": [
+            {
+              "name": "batch",
+              "value": false
+            },
+            {
+              "name": "publish",
+              "value": false
+            }
+          ]
+        }
+      }
+    },
+    {
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
@@ -461,6 +518,28 @@
         [
           {
             "node": "Wait 5s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Test Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Payload": {
+      "main": [
+        [
+          {
+            "node": "Validate + Gate",
             "type": "main",
             "index": 0
           }
