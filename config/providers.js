@@ -21,7 +21,7 @@ defaults:{
 },
 video:{
  runninghub:{enabled:false,mode:"worker_proxy",label:"RunningHub",paid:true},
- pixverse:{enabled:false,mode:"n8n_proxy",label:"PixVerse",paid:true},
+ pixverse:{enabled:false,mode:"n8n_proxy",label:"PixVerse v2",paid:true,requires:["PIXVERSE_API_KEY"],base_url:"https://app-api.pixverse.ai/openapi/v2",default_model:"v6",default_quality:"720p",default_duration:5,single_job_only:true,publish_enabled:false},
  flow:{enabled:false,mode:"manual_handoff",label:"Flow",paid:false},
  factory_mock_video:{enabled:true,mode:"local_mock",label:"Factory Video Mock",paid:false}
 },

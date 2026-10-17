@@ -1,0 +1,35 @@
+name: Validate PixVerse Provider
+
+on:
+  push:
+    paths:
+      - 'providers/pixverse-v2.js'
+      - 'n8n/catpaw-pixverse-v2-i2v.json'
+      - 'tests/pixverse-provider.contract.test.mjs'
+      - 'config/providers.js'
+  pull_request:
+    paths:
+      - 'providers/pixverse-v2.js'
+      - 'n8n/catpaw-pixverse-v2-i2v.json'
+      - 'tests/pixverse-provider.contract.test.mjs'
+      - 'config/providers.js'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate n8n JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('n8n/catpaw-pixverse-v2-i2v.json','utf8')); console.log('n8n JSON valid')"
+      - name: Run PixVerse provider contract test
+        run: node tests/pixverse-provider.contract.test.mjs
+      - name: Ensure API key is not committed
+        run: |
+          if grep -R --exclude='PIXVERSE_V2_PROVIDER.md' --exclude='pixverse-provider.contract.test.mjs' -E 'PIXVERSE_API_KEY[[:space:]]*[:=][[:space:]]*["'\''][^$]' providers n8n config; then
+            echo "Potential hardcoded PixVerse secret detected"
+            exit 1
+          fi
+          echo "No hardcoded PixVerse secret detected"
