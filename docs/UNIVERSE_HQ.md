@@ -5,7 +5,7 @@
 
 ## 0. 入口
 
-- 總部前台：\`https://gogototo24-lang.github.io/catpaw-ai-studio/hq.html\`
+- **總部正式入口：** \`https://catpaw-universe-hq.onrender.com/hq.html\`（Render 靜態站，已部署）\n- GitHub Pages 備援：\`https://gogototo24-lang.github.io/catpaw-ai-studio/hq.html\`（尚未啟用 Pages；目前不能使用）
 - 舊版四線 Mock：\`https://gogototo24-lang.github.io/catpaw-ai-studio/factory.html\`
 - 中央控制器：\`https://threads-scheduler.gogototo24.workers.dev\`
 - 原有發布器：\`https://threads-scheduler.gogototo24.workers.dev/\`
