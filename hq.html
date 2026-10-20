@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="喵掌台灣江湖宇宙大樓｜CatPaw AI Factory 四條產線與 AI 廠長總部">
+<title>喵掌台灣江湖宇宙大樓｜CatPaw HQ</title>
+<style>
+:root{--bg:#090d17;--panel:#141d30;--panel2:#111827;--edge:#34445e;--text:#f2f3f8;--muted:#a6b4c9;--gold:#f5cf76;--mint:#8bd6c4;--pink:#eeb0d5;--blue:#a5bafc;--warning:#ffd58e;--soft:#1f2b40}
+*{box-sizing:border-box}
+body{background:linear-gradient(180deg,#091221,#080d17 70%);color:var(--text);margin:0;font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}
+a{color:#bce5ff}
+main{max-width:1140px;margin:auto;padding:18px 16px 80px}
+header{padding:26px 18px 28px;margin:0 -16px 22px;background:radial-gradient(circle at 86% 0%,#364464 0,transparent 48%),linear-gradient(135deg,#131c2f,#0b101e);border-bottom:1px solid #34425a}
+.head{max-width:1104px;margin:auto}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}
+h1{font-size:clamp(29px,5.5vw,51px);line-height:1.14;letter-spacing:-.035em;margin:10px 0}
+h2{font-size:21px;margin:0 0 11px;letter-spacing:-.02em}
+h3{font-size:17px;margin:0 0 8px}
+p{margin:7px 0;color:var(--muted)}
+.subtitle{font-size:16px;max-width:700px}
+.menu{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.button,.linkbutton{appearance:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid #4f6080;border-radius:11px;background:#23324a;color:var(--text);padding:11px 14px;text-decoration:none;font:700 14px system-ui;cursor:pointer;min-height:43px}
+.button:hover,.linkbutton:hover{border-color:var(--gold)}
+.primary{background:var(--gold);border-color:var(--gold);color:#121722}
+.button:disabled{opacity:.5;cursor:not-allowed}
+.muted{color:var(--muted)}
+.topgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:15px}
+.stat b{display:block;font-size:28px;line-height:1.2;margin:5px 0}
+.stat small{color:var(--muted)}
+.section{margin:24px 0}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:11px}
+.sectionhead p{font-size:13px}
+.pill{font-size:12px;font-weight:800;letter-spacing:.02em;background:#26374a;color:var(--mint);border:1px solid #3d6473;border-radius:99px;padding:5px 9px}
+.pill.locked{color:var(--warning);border-color:#675a3d;background:#342b1c}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:linear-gradient(160deg,#172237,#111a2a);border:1px solid var(--edge);border-radius:17px;padding:18px}
+.floor{min-height:210px;position:relative}
+.floorlabel{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.floor-number{display:flex;align-items:center;justify-content:center;border:1px solid #536983;border-radius:14px;background:#202d45;color:var(--gold);width:47px;height:47px;font-size:23px;font-weight:900;flex-shrink:0}
+.floor .desc{font-size:13px;min-height:38px}
+.floor-footer{border-top:1px solid #34445d;margin-top:15px;padding-top:12px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+.centerfloor{border-color:#786947;background:linear-gradient(120deg,#252336,#172237)}
+.centerfloor .floor-number{color:#181c26;background:var(--gold)}
+.band{display:flex;gap:9px;flex-wrap:wrap}
+.badge{background:#1e2b40;border:1px solid #39506b;color:#dce7f5;font-size:12px;border-radius:7px;padding:5px 8px}
+.flow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px}
+.flow span{background:#1e2a40;border:1px solid #45546b;border-radius:10px;padding:9px 12px;font-size:13px}
+.flow i{font-style:normal;color:var(--gold)}
+.columns{display:grid;grid-template-columns:1.15fr .85fr;gap:13px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-weight:700;font-size:13px;color:#dce6f3;margin-bottom:6px}
+input,select,textarea{background:#0c1526;color:white;border:1px solid #52627c;border-radius:10px;padding:12px;width:100%;font:14px system-ui;min-height:42px}
+textarea{min-height:88px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#7e91ad}
+.note{border:1px dashed #556276;border-radius:12px;padding:11px 12px;color:#bdc9d9;background:#101a2b;font-size:13px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+pre{padding:13px;border:1px solid #354860;border-radius:12px;background:#0a1426;max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all;color:#bcd6ef;font-size:12px}
+#jobList{margin:7px 0}
+.item{padding:11px 0;border-bottom:1px solid #33415a}
+.item:last-child{border:0}
+.item strong{display:block}
+.item small{color:var(--muted)}
+.ok{color:#8ce6c6}.warn{color:#ffdb9a}.err{color:#ffaeb7}
+.notice{color:var(--muted);font-size:12px}
+footer{color:var(--muted);border-top:1px solid var(--edge);padding-top:20px;font-size:13px}
+@media(max-width:800px){.topgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.columns{grid-template-columns:1fr}}
+@media(max-width:570px){.grid,.formgrid{grid-template-columns:1fr}.stat{padding:12px}.stat b{font-size:23px}.floor{min-height:auto}main{padding:14px 13px 60px}header{margin:-14px -13px 20px;padding:26px 18px}.section{margin:22px 0}}
+</style>
+</head>
+<body>
+<header><div class="head">
+  <div class="eyebrow">CATPAW AI FACTORY · UNIVERSE HEADQUARTERS · V1</div>
+  <h1>🏯 喵掌台灣<br>江湖宇宙大樓</h1>
+  <p class="subtitle">一座總部，四條產線，六個 AI 席位。總指揮統籌、廠長負責、Muse 工人待進駐；中央系統保存工作狀態，不再依賴單一聊天視窗。</p>
+  <nav class="menu">
+    <a class="linkbutton primary" href="#floors">參觀大樓</a>
+    <a class="linkbutton" href="#command">總控辦公室</a>
+    <a class="linkbutton" href="factory.html">舊版四線 Mock</a>
+    <a class="linkbutton" href="https://threads-scheduler.gogototo24.workers.dev/" target="_blank" rel="noopener noreferrer">Threads 發布器 ↗</a>
+  </nav>
+</div></header>
+<main>
+  <section class="topgrid" aria-label="大樓即時狀態">
+    <div class="stat"><small>中央任務資料庫</small><b id="dbState">檢查中</b><small>Cloudflare D1</small></div>
+    <div class="stat"><small>已任命席位</small><b id="appointed">— / 6</b><small>任命 ≠ API 已接通</small></div>
+    <div class="stat"><small>總部 Mock 任務</small><b id="jobCount">—</b><small>實際成本 NT$0</small></div>
+    <div class="stat"><small>外部 AI 連線</small><b id="connected">— / 6</b><small>未驗證一律視為未連接</small></div>
+  </section>
+
+  <section class="section" id="floors">
+    <div class="sectionhead"><div><div class="eyebrow">樓層配置</div><h2>指揮塔與四個事業部</h2></div><span class="pill locked">廠長職缺：候選／面試中</span></div>
+    <div class="card centerfloor">
+      <div class="floorlabel"><div class="floor-number">頂</div><div><h3>總指揮塔｜Gemini Enterprise 候選</h3><p>監督四條線、失敗移交、進度追蹤、成本預警；不能繞過正式安全閘門。</p></div></div>
+      <div class="floor-footer"><span id="role-HQ">候選｜尚未任命</span><span class="badge">排程權：候選人不具備</span></div>
+    </div>
+    <div class="grid" style="margin-top:12px">
+      <article class="card floor"><div class="floorlabel"><div class="floor-number">A</div><div><h3>貓掌江湖＋喵台灣</h3><span class="muted">GPT-6 候選廠長</span></div></div><p class="desc">角色正史、15 秒武戲、24H 海巡、非政治熱門話題及 Threads 創作。</p><div class="band"><span class="badge">CANON v3</span><span class="badge">RunningHub</span><span class="badge">Threads</span></div><div class="floor-footer"><span id="role-A">候選｜尚未任命</span><span class="pill locked">內容安全閘門</span></div></article>
+      <article class="card floor"><div class="floorlabel"><div class="floor-number">B</div><div><h3>合法時尚視覺</h3><span class="muted">Grok 候選廠長</span></div></div><p class="desc">成年、合法、非露骨時尚寫真、造型設計、商品視覺；尊重人物肖像及著作權。</p><div class="band"><span class="badge">原創視覺</span><span class="badge">素材驗收</span></div><div class="floor-footer"><span id="role-B">候選｜尚未任命</span><span class="pill locked">未授權不生成</span></div></article>
+      <article class="card floor"><div class="floorlabel"><div class="floor-number">C</div><div><h3>全自動音樂 MV</h3><span class="muted">Gemini 候選廠長</span></div></div><p class="desc">AI Music Studio、歌曲結構、MV 分鏡、節拍對齊、短片剪輯與影片 QA。</p><div class="band"><span class="badge">AI Music Studio</span><span class="badge">Flow</span></div><div class="floor-footer"><span id="role-C">候選｜尚未任命</span><span class="pill locked">成本審核</span></div></article>
+      <article class="card floor"><div class="floorlabel"><div class="floor-number">D</div><div><h3>長影片漫劇</h3><span class="muted">Claude 候選廠長</span></div></div><p class="desc">長篇劇本、角色弧線、集數連貫、長影片分鏡與自動銜接品質驗收。</p><div class="band"><span class="badge">長篇敘事</span><span class="badge">連戲驗收</span></div><div class="floor-footer"><span id="role-D">候選｜尚未任命</span><span class="pill locked">素材連續性</span></div></article>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="floorlabel"><div class="floor-number">W</div><div><h3>Muse 工人工作區</h3><p>候選工人：Muse Spark。資料分類、標籤、拆鏡、初步 QA；只有 API 授權通過才能真正接工單。</p></div></div>
+      <div class="floor-footer"><span id="role-W">候選｜尚未任命</span><span class="badge">不得假稱已接通</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sectionhead"><div><div class="eyebrow">地基與安全</div><h2>資料庫、倉庫、警衛室</h2></div><span class="pill">既有系統續用</span></div>
+    <div class="grid">
+      <div class="card"><h3>📚 角色正史資料庫 v3</h3><p>截至 2026/10/03 的資料快照：43 位角色、10 筆素材紀錄、36 筆武器紀錄。</p><p class="notice">角色 ID 不變；缺圖不能標為 READY；未核准 Master 圖不能自動製片；Shot02／03 必須用真實前鏡尾幀。</p></div>
+      <div class="card"><h3>🔐 安全總閘門</h3><p>總部測試模式：付費 API 呼叫 0、社群發布 0、私訊 0、實際成本 NT$0。</p><p class="notice">P5 現有海巡與已審核排程是獨立正式流程；本總部不會修改它們，也不會將 Mock 素材交給發布器。</p></div>
+      <div class="card"><h3>🧱 工地監控</h3><p>D1 紀錄任務、去重鍵、審核與事件稽核。即使 AI 聊天工作階段停止，資料仍保存。</p><p class="notice">目前沒有接通 Gemini／Grok／Claude／Muse 的正式任務執行 API；「任命」不等於「有權執行」。</p></div>
+      <div class="card"><h3>🚚 生產機具</h3><p><a href="https://github.com/gogototo24-lang/catpaw-ai-studio" target="_blank" rel="noopener">CatPaw Studio</a> · <a href="https://github.com/gogototo24-lang/threads-scheduler" target="_blank" rel="noopener">Threads Worker</a> · <a href="https://github.com/gogototo24-lang/ai-music-studio-v2" target="_blank" rel="noopener">Music Studio v2</a></p><p class="notice">RunningHub、PixVerse、Flow 等生成服務沿用現有設定，不因建總部而重新扣點。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="command">
+    <div class="sectionhead"><div><div class="eyebrow">管理室 · ADMIN ONLY</div><h2>廠長面試與工單中心</h2></div><span class="pill locked">正式生產尚未開放</span></div>
+    <div class="columns">
+      <section class="card">
+        <h3>01｜總控管理員連線</h3>
+        <p>使用既有 Cloudflare Worker 的 ADMIN_KEY。密碼僅存於目前這個分頁的記憶體，不會放入 GitHub、網址或本機儲存。</p>
+        <div class="formgrid">
+          <div><label for="adminKey">ADMIN_KEY</label><input id="adminKey" type="password" autocomplete="off" placeholder="在此輸入管理金鑰"></div>
+          <div><label for="connect">連線</label><button class="button primary" id="connect" style="width:100%">連接總部資料庫</button></div>
+        </div>
+        <div class="actions"><button class="button" id="refresh" disabled>讀取任務與席位</button><button class="button" id="disconnect" disabled>登出此分頁</button></div>
+        <p id="message" class="note" role="status">尚未登入。可先參觀大樓；派工與任命需要管理權限。</p>
+      </section>
+      <section class="card">
+        <h3>02｜任命廠長（不會自動授權 API）</h3>
+        <form id="appointForm">
+          <div class="formgrid">
+            <div><label for="roleSlot">席位</label><select id="roleSlot"><option value="HQ">總指揮塔</option><option value="A">A｜貓掌／喵台灣</option><option value="B">B｜時尚視覺</option><option value="C">C｜音樂 MV</option><option value="D">D｜長篇漫劇</option><option value="W">Muse 工人區</option></select></div>
+            <div><label for="roleStatus">面試狀態</label><select id="roleStatus"><option value="candidate">候選</option><option value="interviewing">面試中</option><option value="appointed">已任命（僅登記）</option></select></div>
+          </div>
+          <label for="agentName">廠長名稱（從面試結果填寫）</label><input id="agentName" placeholder="例如：Gemini Enterprise">
+          <button class="button" id="appoint" type="submit" disabled>儲存任命紀錄</button>
+        </form>
+        <p class="notice">任命後的 connector_verified 仍為 0。需要正式 API 測試證明才可改為已連線，不能只憑口頭報到。</p>
+      </section>
+    </div>
+    <div class="columns" style="margin-top:12px">
+      <section class="card">
+        <h3>03｜四線 Mock 壓測</h3><p>在真正招募之前，用四張不花錢、不發文的工單先測試 D1 能否持久保存工作及避免重複提交。</p>
+        <div class="flow"><span>建立工單</span><i>→</i><span>寫入 D1</span><i>→</i><span>待人工驗收</span></div>
+        <div class="actions"><button class="button primary" id="runMock" disabled>四條線各跑一筆 Mock</button></div>
+        <pre id="mockResult">尚未執行。此按鈕不呼叫外部 AI，也不發布任何貼文。</pre>
+      </section>
+      <section class="card">
+        <h3>04｜手動登記一張工單</h3>
+        <form id="jobForm">
+          <label for="jobPipeline">部門</label><select id="jobPipeline"><option value="A">A｜貓掌／喵台灣</option><option value="B">B｜時尚視覺</option><option value="C">C｜音樂 MV</option><option value="D">D｜長篇漫劇</option></select>
+          <label for="jobTitle">任務名稱</label><input id="jobTitle" maxlength="120" placeholder="例如：舞魅喵 MV 第七鏡">
+          <label for="jobBrief">工作說明</label><textarea id="jobBrief" maxlength="2000" placeholder="描述需求、素材來源和要驗收的條件"></textarea>
+          <button class="button" id="saveJob" type="submit" disabled>建立零成本待審工單</button>
+        </form>
+      </section>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sectionhead"><div><div class="eyebrow">真實 D1 紀錄</div><h2>最新工單與現場回報</h2></div><span class="pill">非 Mock 成品不得憑空宣稱</span></div>
+    <div class="columns">
+      <div class="card"><h3>最近四線工單</h3><div id="jobList"><p>登入後讀取真實工單。</p></div></div>
+      <div class="card"><h3>工作事件紀錄</h3><div id="auditList"><p>登入後讀取真實稽核紀錄。</p></div></div>
+    </div>
+  </section>
+  <footer>
+    <b>CatPaw AI Factory 宇宙大樓 · 基礎設施 v1</b>
+    <p>網站屬操作面板；D1 才是共享資料來源。總部 Mock 不觸發實際付款或社群發布。所有模型候選都需要面試、連接、權限與驗收。</p>
+    <p><a href="./">返回 AI Studio</a> · <a href="factory.html">原有四產線 Mock</a> · <a href="https://github.com/gogototo24-lang/catpaw-ai-studio/blob/main/docs/UNIVERSE_HQ.md">技術規格及交接手冊</a></p>
+  </footer>
+</main>
+<script>
+(function(){
+'use strict';
+const API='https://threads-scheduler.gogototo24.workers.dev/api/factory/hq';
+const $=id=>document.getElementById(id);
+let adminKey='', batchKey='';
+const roleNames={HQ:'總指揮',A:'A 線',B:'B 線',C:'C 線',D:'D 線',W:'工人區'};
+const statNames={candidate:'候選',interviewing:'面試中',appointed:'已任命'};
+function safe(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function message(txt,kind){$('message').textContent=txt;$('message').className='note '+(kind||'');}
+function unlock(yes){['refresh','disconnect','appoint','runMock','saveJob'].forEach(id=>$(id).disabled=!yes);}
+async function request(method,path,payload,withAdmin) {
+  const headers={};
+  if(payload!==undefined)headers['content-type']='application/json';
+  if(withAdmin)headers['x-admin-key']=adminKey;
+  const opts={method,headers,cache:'no-store',credentials:'omit'};
+  if(payload!==undefined)opts.body=JSON.stringify(payload);
+  const r=await fetch(API+path,opts);
+  let data={};try{data=await r.json();}catch{}
+  if(!r.ok)throw Error((data&&data.error)||'HTTP '+r.status);
+  return data;
+}
+async function loadPublic(){
+  try{
+    const d=await request('GET','/public',undefined,false);
+    $('dbState').textContent=d.ready?'已連線':'未就緒';
+    $('appointed').textContent=d.actor_count+' / 6';
+    $('connected').textContent=d.connected_agents+' / 6';
+    $('jobCount').textContent=String(d.mock_jobs);
+  }catch(e){$('dbState').textContent='無法連線';$('dbState').className='err';}
+}
+function renderRoles(roles){
+  for(const role of roles||[]){
+    const el=$('role-'+role.role_id);if(!el)continue;
+    const status=statNames[role.status]||role.status;
+    el.textContent=status+(role.appointed_name?'｜'+role.appointed_name:'｜尚未任命')+
+      (role.connector_verified?' · API 已驗證':' · API 未驗證');
+    el.className=role.connector_verified?'ok':'warn';
+  }
+}
+function renderState(d){
+  $('dbState').textContent='正常';
+  $('appointed').textContent=d.actor_count+' / 6';
+  $('connected').textContent=d.connected_agents+' / 6';
+  $('jobCount').textContent=String(d.mock_jobs);
+  renderRoles(d.roles);
+  const jobs=d.jobs||[];
+  $('jobList').innerHTML=jobs.length?jobs.slice(0,15).map(j=>
+    '<div class="item"><strong>'+safe(j.pipeline_id)+'｜'+safe(j.title)+'</strong><small>'+
+    safe(j.status)+' · NT$'+Number(j.actual_cost_twd||0)+' · '+safe(j.created_at)+
+    '</small><div class="notice">'+safe(j.brief)+'</div></div>').join(''):'<p>尚無總部工單。可執行四線 Mock。</p>';
+  const events=d.recent_events||[];
+  $('auditList').innerHTML=events.length?events.slice(0,14).map(e=>
+    '<div class="item"><strong>'+safe(e.action)+'</strong><small>'+
+    safe(e.role_id||e.job_id||'SYSTEM')+' · '+safe(e.created_at)+'</small></div>').join(''):'<p>尚無工作事件。</p>';
+}
+async function refresh(){
+  if(!adminKey)throw Error('請先連線');
+  const d=await request('GET','/state',undefined,true);renderState(d);return d;
+}
+$('connect').addEventListener('click',async()=>{
+  const key=$('adminKey').value.trim();if(!key){message('請輸入有效的 ADMIN_KEY','warn');return;}
+  adminKey=key;$('adminKey').value='';
+  try{await refresh();unlock(true);message('已驗證 Worker 管理授權。可任命廠長與建立 Mock 工單。','ok');}
+  catch(e){adminKey='';unlock(false);message('授權或連線失敗：'+e.message,'err');}
+});
+$('disconnect').addEventListener('click',()=>{adminKey='';unlock(false);message('已登出。本分頁不保留管理金鑰。');});
+$('refresh').addEventListener('click',async()=>{try{await refresh();message('已從 D1 重新讀取。','ok');}catch(e){message('讀取失敗：'+e.message,'err');}});
+$('appointForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(!adminKey)return;
+  const slot=$('roleSlot').value,status=$('roleStatus').value,name=$('agentName').value.trim();
+  try{
+    await request('PATCH','/roles/'+encodeURIComponent(slot),{status,appointed_name:name},true);
+    await refresh();message(roleNames[slot]+' 的面試／任命紀錄已存入 D1；API 仍未連接。','ok');
+  }catch(err){message('任命失敗：'+err.message,'err');}
+});
+$('runMock').addEventListener('click',async()=>{
+  if(!adminKey)return;
+  if(!batchKey)batchKey='hq-'+crypto.randomUUID();
+  $('runMock').disabled=true;
+  try{
+    const d=await request('POST','/mock-run',{batch_key:batchKey},true);
+    $('mockResult').textContent=JSON.stringify(d,null,2);
+    await refresh();message('四線 Mock 已寫入 D1，成本與發布呼叫均為 0；同批再次執行會去重。','ok');
+  }catch(e){$('mockResult').textContent=e.message;message('Mock 失敗：'+e.message,'err');}
+  finally{$('runMock').disabled=false;}
+});
+$('jobForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(!adminKey)return;
+  const payload={pipeline_id:$('jobPipeline').value,title:$('jobTitle').value,brief:$('jobBrief').value,
+    mode:'mock',paid_enabled:false,publish_enabled:false,budget_max_twd:0,idempotency_key:'hqjob-'+crypto.randomUUID()};
+  try{
+    const d=await request('POST','/jobs',payload,true);
+    await refresh();$('jobTitle').value='';$('jobBrief').value='';
+    message('工單 '+d.job_id+' 已寫入 D1，待審核，不會自動生成或發布。','ok');
+  }catch(err){message('工單建立失敗：'+err.message,'err');}
+});
+loadPublic();
+})();
+</script>
+</body>
+</html>
