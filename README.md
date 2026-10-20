@@ -1,5 +1,15 @@
 # CatPaw AI Studio / CatPaw AI Factory v0.2
 
+## 🏯 宇宙大樓 HQ v1（2026-10-20）
+
+**正式總部：** https://catpaw-universe-hq.onrender.com/hq.html
+
+- Cloudflare Worker + D1 共用的六個席位（總指揮、A/B/C/D 廠長、Muse 工人），任命／面試登記已支援。
+- 四線 Mock 任務可存入 D1（0 付費、0 發布），含去重鍵與事件稽核。
+- 角色正史中央資料庫 v3 的安全規則已列於 `docs/UNIVERSE_HQ.md`。
+- 使用者面試廠長可用 `docs/AI_INTERVIEW_AND_ONBOARDING.md`。
+- 四大候選 AI 與 Muse 尚未接通正式代理 API；任命不等於能自動做工。
+
 《貓掌江湖》CANON 製片工具已升級為四產線共用總控的 P1 Mock 可執行版。
 
 ## 四條產線
