@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/gogototo24-lang/catpaw-ai-studio/blob/main/schemas/hq-agent-handoff.v1.schema.json",
+  "title": "CatPaw HQ provider-neutral agent handoff envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "pipeline_id",
+    "role_id",
+    "mode",
+    "idempotency_key",
+    "task",
+    "safety",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "catpaw.hq.handoff.v1"
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 8
+    },
+    "pipeline_id": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "role_id": {
+      "enum": [
+        "HQ",
+        "A",
+        "B",
+        "C",
+        "D",
+        "W"
+      ]
+    },
+    "mode": {
+      "const": "mock"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 8
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "brief"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "brief": {
+          "type": "string"
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paid_enabled",
+        "publish_enabled",
+        "actual_cost_twd",
+        "canon_gate",
+        "qa_required"
+      ],
+      "properties": {
+        "paid_enabled": {
+          "const": false
+        },
+        "publish_enabled": {
+          "const": false
+        },
+        "actual_cost_twd": {
+          "const": 0
+        },
+        "canon_gate": {
+          "const": true
+        },
+        "qa_required": {
+          "const": true
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "in_review",
+        "awaiting_review",
+        "blocked",
+        "completed_mock"
+      ]
+    },
+    "provider_job_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output_asset_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      }
+    },
+    "error_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
