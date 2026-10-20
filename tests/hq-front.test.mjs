@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { Script } from 'node:vm';
 
 const html=readFileSync(new URL('../hq.html',import.meta.url),'utf8');
 const docs=readFileSync(new URL('../docs/UNIVERSE_HQ.md',import.meta.url),'utf8');
@@ -35,4 +36,10 @@ test('recruitment and production status are clearly separated',()=>{
   assert.ok(html.includes('API 未驗證'));
   assert.ok(docs.includes('未接'));
   assert.ok(docs.includes('不會扣 RunningHub 幣'));
+});
+
+test('inline browser controller is JavaScript-syntax valid',()=>{
+ const match=html.match(/<script>([\s\S]*?)<\/script>/);
+ assert.ok(match,'Controller script exists');
+ assert.doesNotThrow(()=>new Script(match[1]));
 });
