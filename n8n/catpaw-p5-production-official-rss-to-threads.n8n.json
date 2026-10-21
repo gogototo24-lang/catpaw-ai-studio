@@ -1,0 +1,129 @@
+{
+  "name": "CatPaw P5｜正式24H藝文海巡直發（官方RSS）",
+  "nodes": [
+    {
+      "parameters": {
+        "feedUrl": "https://www.moc.gov.tw/OpenData.aspx?SN=C4E4E3A8E687AD91",
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 10,
+              "unit": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "p5-production-rss-trigger",
+      "name": "官方文化新聞 RSS｜新文章才啟動",
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        240
+      ],
+      "notes": "直接由 n8n RSS trigger 新文章觸發；首次啟用不回補舊聞。"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const now=Date.now();\nconst allow=/布袋戲|歌仔戲|戲曲|劇場|藝術|展覽|特展|表演|戲劇|音樂|演出|文化|書展|繪本|閱讀|動畫|動漫|博物館|文創|燈會|工藝|影展|電影|美術|市集/;\nconst blocked=/總統|立法院|政治|選舉|罷免|公投|政黨|候選人|立委|議員|市長|兩岸|外交|國防|戰爭|抗議|詐騙|火災|事故|傷亡|死亡|病逝|辭世|性侵|性騷|侵害|爭議|衝突|訴訟|司法|法規|政策|補助|預算|採購|裁罰|疫|緊急|天災|地震|治安|停電|勞資爭議|酷兒|同志|性別|裸露|情慾|成人|敏感/;\nconst candidates=[];\nfor(const item of $input.all()){\n const a=item.json||{};\n const title=String(a.title||'').replace(/<[^>]*>/g,'').trim();\n let link;try{link=new URL(String(a.link||a.guid||''))}catch{continue}\n if(link.protocol!=='https:'||link.hostname.toLowerCase()!=='www.moc.gov.tw')continue;\n link.hash='';\n const timestamp=Date.parse(String(a.isoDate||a.pubDate||a.published||''));\n if(!Number.isFinite(timestamp)||timestamp>now+180000||now-timestamp>90*60000)continue;\n if(title.length<7||title.length>220||!allow.test(title)||blocked.test(title))continue;\n const url=link.toString();\n const post='🎭 喵台灣文化快訊！\\n文化部最新公告提到：「'+title.slice(0,125)+'」\\n你最想了解這則藝文消息的哪個部分？😸\\n官方來源：'+url+'\\n#喵台灣 #台灣文化';\n if(Array.from(post).length>500)continue;\n const score=/布袋戲|戲曲|影展|音樂|電影|表演/.test(title)?10:5;\n candidates.push({score,timestamp,body:{\n  title,source_url:url,category:'culture',verified_at:new Date().toISOString(),\n  verification_method:'official',verification_urls:[url],text:post,\n  contains_unlicensed_media:false,political:false,high_risk:false,review_required:false\n }});\n}\ncandidates.sort((a,b)=>b.score-a.score||b.timestamp-a.timestamp);\n// Never send a burst when a publisher suddenly adds multiple RSS entries.\n// Source URL de-duplication is independently enforced by Cloudflare D1.\nreturn candidates.slice(0,1).map(x=>({json:x.body}));"
+      },
+      "id": "p5-production-canon-safety",
+      "name": "P5｜官方來源＋新鮮度＋政治敏感防線",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        240
+      ],
+      "notes": "只允許 90 分鐘內、官方文化部來源的低風險原創文字；其他內容輸出空陣列，不發布。"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://threads-scheduler.gogototo24.workers.dev/api/factory/p5/fastlane",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "p5-production-publish",
+      "name": "P5｜Cloudflare Fastlane → Threads 官方 API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        870,
+        240
+      ],
+      "retryOnFail": false,
+      "notes": "只使用 n8n 已建的 Header Auth Credential (x-p5-scout-key)。不把憑證放到此 JSON。HTTP POST 由 Cloudflare Fastlane 做 D1 去重、安全檢查與正式發布。"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "const j=$json||{};\nif(!j.action_id)throw new Error('P5 回應缺少 action_id：不能宣稱發布成功');\nreturn {json:{\n  system:'CatPaw P5',\n  action_id:j.action_id,\n  status:j.status||'unknown',\n  published:j.published===true,\n  thread_id:j.thread_id||null,\n  permalink:j.permalink||null,\n  deduplicated:j.deduplicated===true,\n  requires_attention:j.status==='publish_unknown'||j.status==='blocked_auth',\n  note:j.published===true?'Threads API 已回傳正式貼文 ID':'僅代表已接收或處理，尚未確認已發布'\n}};"
+      },
+      "id": "p5-production-receipt",
+      "name": "P5｜真實 ID／網址回報",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        240
+      ],
+      "notes": "僅 published=true 且有 thread_id 才標已發布；否則保留真實狀態，不假報已發。"
+    }
+  ],
+  "connections": {
+    "官方文化新聞 RSS｜新文章才啟動": {
+      "main": [
+        [
+          {
+            "node": "P5｜官方來源＋新鮮度＋政治敏感防線",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P5｜官方來源＋新鮮度＋政治敏感防線": {
+      "main": [
+        [
+          {
+            "node": "P5｜Cloudflare Fastlane → Threads 官方 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P5｜Cloudflare Fastlane → Threads 官方 API": {
+      "main": [
+        [
+          {
+            "node": "P5｜真實 ID／網址回報",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

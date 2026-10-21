@@ -1,0 +1,24 @@
+name: Validate P5 Production RSS to Threads
+
+on:
+  pull_request:
+    paths:
+      - 'n8n/catpaw-p5-production-official-rss-to-threads.n8n.json'
+      - 'tests/p5-production-official-rss.test.mjs'
+      - 'docs/P5_24H_PRODUCTION_RSS_SETUP.md'
+      - '.github/workflows/validate-p5-production-rss.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate RSS news selection and P5 production receipt
+        run: node --test tests/p5-production-official-rss.test.mjs
