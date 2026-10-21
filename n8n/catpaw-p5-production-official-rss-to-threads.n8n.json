@@ -68,7 +68,7 @@
       "parameters": {
         "mode": "runOnceForEachItem",
         "language": "javaScript",
-        "jsCode": "const j=$json||{};\nif(!j.action_id)throw new Error('P5 回應缺少 action_id：不能宣稱發布成功');\nreturn [{json:{\n  system:'CatPaw P5',\n  action_id:j.action_id,\n  status:j.status||'unknown',\n  published:j.published===true,\n  thread_id:j.thread_id||null,\n  permalink:j.permalink||null,\n  deduplicated:j.deduplicated===true,\n  requires_attention:j.status==='publish_unknown'||j.status==='blocked_auth',\n  note:j.published===true?'Threads API 已回傳正式貼文 ID':'僅代表已接收或處理，尚未確認已發布'\n}}];"
+        "jsCode": "const j=$json||{};\nif(!j.action_id)throw new Error('P5 回應缺少 action_id：不能宣稱發布成功');\nreturn {json:{\n  system:'CatPaw P5',\n  action_id:j.action_id,\n  status:j.status||'unknown',\n  published:j.published===true,\n  thread_id:j.thread_id||null,\n  permalink:j.permalink||null,\n  deduplicated:j.deduplicated===true,\n  requires_attention:j.status==='publish_unknown'||j.status==='blocked_auth',\n  note:j.published===true?'Threads API 已回傳正式貼文 ID':'僅代表已接收或處理，尚未確認已發布'\n}};"
       },
       "id": "p5-production-receipt",
       "name": "P5｜真實 ID／網址回報",
