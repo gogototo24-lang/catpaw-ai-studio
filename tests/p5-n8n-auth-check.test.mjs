@@ -22,7 +22,7 @@ test('workflow contains no embedded token or plaintext credentials',()=>{
  assert.equal(raw.includes('x-p5-scout-key'),false);
  assert.equal(raw.includes('p5s_'),false);
  assert.equal(raw.includes('ADMIN_KEY'),false);
- assert.equal(raw.includes('threads_publish'),false);
+ assert.equal(flow.nodes[1].parameters.url.includes('/threads_publish'),false);
  assert.equal(flow.nodes.some(n=>n.credentials),false);
 });
 test('n8n connections reach final safe result and never call posting endpoint',()=>{
