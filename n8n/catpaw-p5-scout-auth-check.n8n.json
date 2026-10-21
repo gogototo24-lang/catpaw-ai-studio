@@ -1,0 +1,81 @@
+{
+  "name": "CatPaw P5｜海巡金鑰接線驗收（不發文）",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "catpaw-p5-manual-trigger",
+      "name": "手動開始｜安全測試",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://threads-scheduler.gogototo24.workers.dev/api/factory/p5/fastlane/health",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "catpaw-p5-health-get",
+      "name": "P5 授權健康檢查（GET）",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        530,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const s=$json; const authorized = s.worker_ready === true && s.threads_token_stored === true; return [{json:{result:authorized ? 'P5_SCOUT_KEY_VALID_HTTP_200' : 'WORKER_OR_OAUTH_NEEDS_CHECK', key_authenticated:true, worker_ready:!!s.worker_ready, threads_token_stored:!!s.threads_token_stored, threads_publish_scope:'請以總控 P5 授權頁已通過之 Meta Debugger 結果為準', scout_credential_used:'n8n Header Auth Credential；金鑰不顯示', notice:'唯讀驗收；沒有建立貼文、沒有排程、沒有觸發付費模型'}}];"
+      },
+      "id": "catpaw-p5-status-explain",
+      "name": "解讀測試結果（不含密鑰）",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        820,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "手動開始｜安全測試": {
+      "main": [
+        [
+          {
+            "node": "P5 授權健康檢查（GET）",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P5 授權健康檢查（GET）": {
+      "main": [
+        [
+          {
+            "node": "解讀測試結果（不含密鑰）",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
